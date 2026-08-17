@@ -9,50 +9,227 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppRouteRouteImport } from './routes/_app/route'
+import { Route as LeaderboardRouteImport } from './routes/leaderboard'
+import { Route as ApphomeIndexRouteImport } from './routes/_app/(home)/index'
+import { Route as AppplayFriendRouteImport } from './routes/_app/(play)/friend'
+import { Route as AppplayQuickRouteImport } from './routes/_app/(play)/quick'
+import { Route as AppGameGameIdRouteImport } from './routes/_app/game/$gameId'
+import { Route as AppProfileHistoryRouteImport } from './routes/_app/profile/history'
+import { Route as AppProfileLoginRouteImport } from './routes/_app/profile/login'
+import { Route as AppProfileProfileRouteImport } from './routes/_app/profile/profile'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const AppRouteRoute = AppRouteRouteImport.update({
+  id: '/_app',
   getParentRoute: () => rootRouteImport,
+} as any)
+const LeaderboardRoute = LeaderboardRouteImport.update({
+  id: '/leaderboard',
+  path: '/leaderboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApphomeIndexRoute = ApphomeIndexRouteImport.update({
+  id: '/(home)/',
+  path: '/',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppplayFriendRoute = AppplayFriendRouteImport.update({
+  id: '/(play)/friend',
+  path: '/friend',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppplayQuickRoute = AppplayQuickRouteImport.update({
+  id: '/(play)/quick',
+  path: '/quick',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppGameGameIdRoute = AppGameGameIdRouteImport.update({
+  id: '/game/$gameId',
+  path: '/game/$gameId',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppProfileHistoryRoute = AppProfileHistoryRouteImport.update({
+  id: '/profile/history',
+  path: '/profile/history',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppProfileLoginRoute = AppProfileLoginRouteImport.update({
+  id: '/profile/login',
+  path: '/profile/login',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppProfileProfileRoute = AppProfileProfileRouteImport.update({
+  id: '/profile/profile',
+  path: '/profile/profile',
+  getParentRoute: () => AppRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
+  '/': typeof ApphomeIndexRoute
+  '/leaderboard': typeof LeaderboardRoute
+  '/friend': typeof AppplayFriendRoute
+  '/quick': typeof AppplayQuickRoute
+  '/game/$gameId': typeof AppGameGameIdRoute
+  '/profile/history': typeof AppProfileHistoryRoute
+  '/profile/login': typeof AppProfileLoginRoute
+  '/profile/profile': typeof AppProfileProfileRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
+  '/leaderboard': typeof LeaderboardRoute
+  '/friend': typeof AppplayFriendRoute
+  '/quick': typeof AppplayQuickRoute
+  '/game/$gameId': typeof AppGameGameIdRoute
+  '/profile/history': typeof AppProfileHistoryRoute
+  '/profile/login': typeof AppProfileLoginRoute
+  '/profile/profile': typeof AppProfileProfileRoute
+  '/': typeof ApphomeIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
+  '/_app': typeof AppRouteRouteWithChildren
+  '/leaderboard': typeof LeaderboardRoute
+  '/_app/(play)/friend': typeof AppplayFriendRoute
+  '/_app/(play)/quick': typeof AppplayQuickRoute
+  '/_app/game/$gameId': typeof AppGameGameIdRoute
+  '/_app/profile/history': typeof AppProfileHistoryRoute
+  '/_app/profile/login': typeof AppProfileLoginRoute
+  '/_app/profile/profile': typeof AppProfileProfileRoute
+  '/_app/(home)/': typeof ApphomeIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/leaderboard'
+    | '/friend'
+    | '/quick'
+    | '/game/$gameId'
+    | '/profile/history'
+    | '/profile/login'
+    | '/profile/profile'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/leaderboard'
+    | '/friend'
+    | '/quick'
+    | '/game/$gameId'
+    | '/profile/history'
+    | '/profile/login'
+    | '/profile/profile'
+    | '/'
+  id:
+    | '__root__'
+    | '/_app'
+    | '/leaderboard'
+    | '/_app/(play)/friend'
+    | '/_app/(play)/quick'
+    | '/_app/game/$gameId'
+    | '/_app/profile/history'
+    | '/_app/profile/login'
+    | '/_app/profile/profile'
+    | '/_app/(home)/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
+  AppRouteRoute: typeof AppRouteRouteWithChildren
+  LeaderboardRoute: typeof LeaderboardRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
+    '/_app': {
+      id: '/_app'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AppRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/leaderboard': {
+      id: '/leaderboard'
+      path: '/leaderboard'
+      fullPath: '/leaderboard'
+      preLoaderRoute: typeof LeaderboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_app/(home)/': {
+      id: '/_app/(home)/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof ApphomeIndexRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/_app/(play)/friend': {
+      id: '/_app/(play)/friend'
+      path: '/friend'
+      fullPath: '/friend'
+      preLoaderRoute: typeof AppplayFriendRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/_app/(play)/quick': {
+      id: '/_app/(play)/quick'
+      path: '/quick'
+      fullPath: '/quick'
+      preLoaderRoute: typeof AppplayQuickRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/_app/game/$gameId': {
+      id: '/_app/game/$gameId'
+      path: '/game/$gameId'
+      fullPath: '/game/$gameId'
+      preLoaderRoute: typeof AppGameGameIdRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/_app/profile/history': {
+      id: '/_app/profile/history'
+      path: '/profile/history'
+      fullPath: '/profile/history'
+      preLoaderRoute: typeof AppProfileHistoryRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/_app/profile/login': {
+      id: '/_app/profile/login'
+      path: '/profile/login'
+      fullPath: '/profile/login'
+      preLoaderRoute: typeof AppProfileLoginRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/_app/profile/profile': {
+      id: '/_app/profile/profile'
+      path: '/profile/profile'
+      fullPath: '/profile/profile'
+      preLoaderRoute: typeof AppProfileProfileRouteImport
+      parentRoute: typeof AppRouteRoute
     }
   }
 }
 
+interface AppRouteRouteChildren {
+  AppplayFriendRoute: typeof AppplayFriendRoute
+  AppplayQuickRoute: typeof AppplayQuickRoute
+  AppGameGameIdRoute: typeof AppGameGameIdRoute
+  AppProfileHistoryRoute: typeof AppProfileHistoryRoute
+  AppProfileLoginRoute: typeof AppProfileLoginRoute
+  AppProfileProfileRoute: typeof AppProfileProfileRoute
+  ApphomeIndexRoute: typeof ApphomeIndexRoute
+}
+
+const AppRouteRouteChildren: AppRouteRouteChildren = {
+  AppplayFriendRoute: AppplayFriendRoute,
+  AppplayQuickRoute: AppplayQuickRoute,
+  AppGameGameIdRoute: AppGameGameIdRoute,
+  AppProfileHistoryRoute: AppProfileHistoryRoute,
+  AppProfileLoginRoute: AppProfileLoginRoute,
+  AppProfileProfileRoute: AppProfileProfileRoute,
+  ApphomeIndexRoute: ApphomeIndexRoute,
+}
+
+const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(
+  AppRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
+  AppRouteRoute: AppRouteRouteWithChildren,
+  LeaderboardRoute: LeaderboardRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
