@@ -15,9 +15,9 @@ import { Route as ApphomeIndexRouteImport } from './routes/_app/(home)/index'
 import { Route as AppplayFriendRouteImport } from './routes/_app/(play)/friend'
 import { Route as AppplayQuickRouteImport } from './routes/_app/(play)/quick'
 import { Route as AppGameGameIdRouteImport } from './routes/_app/game/$gameId'
+import { Route as AppProfileIndexRouteImport } from './routes/_app/profile/index'
 import { Route as AppProfileHistoryRouteImport } from './routes/_app/profile/history'
 import { Route as AppProfileLoginRouteImport } from './routes/_app/profile/login'
-import { Route as AppProfileProfileRouteImport } from './routes/_app/profile/profile'
 
 const AppRouteRoute = AppRouteRouteImport.update({
   id: '/_app',
@@ -48,6 +48,11 @@ const AppGameGameIdRoute = AppGameGameIdRouteImport.update({
   path: '/game/$gameId',
   getParentRoute: () => AppRouteRoute,
 } as any)
+const AppProfileIndexRoute = AppProfileIndexRouteImport.update({
+  id: '/profile/',
+  path: '/profile/',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 const AppProfileHistoryRoute = AppProfileHistoryRouteImport.update({
   id: '/profile/history',
   path: '/profile/history',
@@ -56,11 +61,6 @@ const AppProfileHistoryRoute = AppProfileHistoryRouteImport.update({
 const AppProfileLoginRoute = AppProfileLoginRouteImport.update({
   id: '/profile/login',
   path: '/profile/login',
-  getParentRoute: () => AppRouteRoute,
-} as any)
-const AppProfileProfileRoute = AppProfileProfileRouteImport.update({
-  id: '/profile/profile',
-  path: '/profile/profile',
   getParentRoute: () => AppRouteRoute,
 } as any)
 
@@ -72,7 +72,7 @@ export interface FileRoutesByFullPath {
   '/game/$gameId': typeof AppGameGameIdRoute
   '/profile/history': typeof AppProfileHistoryRoute
   '/profile/login': typeof AppProfileLoginRoute
-  '/profile/profile': typeof AppProfileProfileRoute
+  '/profile/': typeof AppProfileIndexRoute
 }
 export interface FileRoutesByTo {
   '/leaderboard': typeof LeaderboardRoute
@@ -81,8 +81,8 @@ export interface FileRoutesByTo {
   '/game/$gameId': typeof AppGameGameIdRoute
   '/profile/history': typeof AppProfileHistoryRoute
   '/profile/login': typeof AppProfileLoginRoute
-  '/profile/profile': typeof AppProfileProfileRoute
   '/': typeof ApphomeIndexRoute
+  '/profile': typeof AppProfileIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -93,8 +93,8 @@ export interface FileRoutesById {
   '/_app/game/$gameId': typeof AppGameGameIdRoute
   '/_app/profile/history': typeof AppProfileHistoryRoute
   '/_app/profile/login': typeof AppProfileLoginRoute
-  '/_app/profile/profile': typeof AppProfileProfileRoute
   '/_app/(home)/': typeof ApphomeIndexRoute
+  '/_app/profile/': typeof AppProfileIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -106,7 +106,7 @@ export interface FileRouteTypes {
     | '/game/$gameId'
     | '/profile/history'
     | '/profile/login'
-    | '/profile/profile'
+    | '/profile/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/leaderboard'
@@ -115,8 +115,8 @@ export interface FileRouteTypes {
     | '/game/$gameId'
     | '/profile/history'
     | '/profile/login'
-    | '/profile/profile'
     | '/'
+    | '/profile'
   id:
     | '__root__'
     | '/_app'
@@ -126,8 +126,8 @@ export interface FileRouteTypes {
     | '/_app/game/$gameId'
     | '/_app/profile/history'
     | '/_app/profile/login'
-    | '/_app/profile/profile'
     | '/_app/(home)/'
+    | '/_app/profile/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -179,6 +179,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppGameGameIdRouteImport
       parentRoute: typeof AppRouteRoute
     }
+    '/_app/profile/': {
+      id: '/_app/profile/'
+      path: '/profile'
+      fullPath: '/profile/'
+      preLoaderRoute: typeof AppProfileIndexRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
     '/_app/profile/history': {
       id: '/_app/profile/history'
       path: '/profile/history'
@@ -193,13 +200,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppProfileLoginRouteImport
       parentRoute: typeof AppRouteRoute
     }
-    '/_app/profile/profile': {
-      id: '/_app/profile/profile'
-      path: '/profile/profile'
-      fullPath: '/profile/profile'
-      preLoaderRoute: typeof AppProfileProfileRouteImport
-      parentRoute: typeof AppRouteRoute
-    }
   }
 }
 
@@ -209,8 +209,8 @@ interface AppRouteRouteChildren {
   AppGameGameIdRoute: typeof AppGameGameIdRoute
   AppProfileHistoryRoute: typeof AppProfileHistoryRoute
   AppProfileLoginRoute: typeof AppProfileLoginRoute
-  AppProfileProfileRoute: typeof AppProfileProfileRoute
   ApphomeIndexRoute: typeof ApphomeIndexRoute
+  AppProfileIndexRoute: typeof AppProfileIndexRoute
 }
 
 const AppRouteRouteChildren: AppRouteRouteChildren = {
@@ -219,8 +219,8 @@ const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppGameGameIdRoute: AppGameGameIdRoute,
   AppProfileHistoryRoute: AppProfileHistoryRoute,
   AppProfileLoginRoute: AppProfileLoginRoute,
-  AppProfileProfileRoute: AppProfileProfileRoute,
   ApphomeIndexRoute: ApphomeIndexRoute,
+  AppProfileIndexRoute: AppProfileIndexRoute,
 }
 
 const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(

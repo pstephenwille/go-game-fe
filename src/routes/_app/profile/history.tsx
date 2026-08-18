@@ -5,5 +5,5 @@ export const Route = createFileRoute('/_app/profile/history')({
 })
 
 function RouteComponent() {
-  return <div>Hello "/user/login"!</div>
+  return <div>Hello "/user/history"!</div>
 }

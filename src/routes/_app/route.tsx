@@ -6,7 +6,6 @@ export const Route = createFileRoute('/_app')({
 
 function RouteComponent() {
   return <div id={'layout'}>
-layout
     <main>
       <Outlet />
     </main>
