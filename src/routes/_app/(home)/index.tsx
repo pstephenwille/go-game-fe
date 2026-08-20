@@ -1,5 +1,4 @@
 import { createFileRoute } from '@tanstack/react-router'
-import AppShell from '@/components/app-shell';
 
 export const Route = createFileRoute('/_app/(home)/')({ component: Home })
 
@@ -10,7 +9,6 @@ function Home() {
       <p className="mt-4 text-lg">
         Edit <code>src/routes/index.tsx</code> to get started.
       </p>
-      <AppShell />
     </div>
   )
 }

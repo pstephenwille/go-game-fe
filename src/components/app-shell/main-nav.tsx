@@ -1,28 +1,30 @@
-import { Link } from "@heroui/react";
+import { Link } from '@tanstack/react-router';
 
 const navigation = [
-  {
-    label: "Home",
-    href: "/home",
-  },
-  {
-    label: "Game",
-    href: "/game",
-  },
-  {
-    label: "Profile",
-    href: "/profile",
-  },
-];
+	{
+		label: 'Home',
+		to: '/',
+	},
+	{
+		label: 'Game',
+		to: `/game/$gameId`,
+	},
+	{
+		label: 'Profile',
+		to: '/profile',
+	},
+] as const;
 
-export function MainNav({collapsed}) {
-  return (
-    <nav>
-      {navigation.map((item) => (
-        <Link key={item.href} href={item.href}>
-          {item.label}
-        </Link>
-      ))}
-    </nav>
-  );
+export function MainNav() {
+	return (
+		<nav>
+			<ul>
+				{navigation.map((item, idx) => (
+					<li key={idx}>
+						<Link to={item.to}>{item.label}</Link>
+					</li>
+				))}
+			</ul>
+		</nav>
+	);
 }
