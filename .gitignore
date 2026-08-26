@@ -12,3 +12,10 @@ dist-ssr
 __unconfig*
 todos.json
 .serverless
+
+# amplify
+.amplify
+amplify_outputs*
+amplifyconfiguration*
+
+.env.dev.local

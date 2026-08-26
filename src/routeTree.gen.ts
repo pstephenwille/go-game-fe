@@ -10,7 +10,6 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AppRouteRouteImport } from './routes/_app/route'
-import { Route as LeaderboardRouteImport } from './routes/leaderboard'
 import { Route as ApphomeIndexRouteImport } from './routes/_app/(home)/index'
 import { Route as AppplayFriendRouteImport } from './routes/_app/(play)/friend'
 import { Route as AppplayQuickRouteImport } from './routes/_app/(play)/quick'
@@ -21,11 +20,6 @@ import { Route as AppProfileLoginRouteImport } from './routes/_app/profile/login
 
 const AppRouteRoute = AppRouteRouteImport.update({
   id: '/_app',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LeaderboardRoute = LeaderboardRouteImport.update({
-  id: '/leaderboard',
-  path: '/leaderboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApphomeIndexRoute = ApphomeIndexRouteImport.update({
@@ -66,7 +60,6 @@ const AppProfileLoginRoute = AppProfileLoginRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof ApphomeIndexRoute
-  '/leaderboard': typeof LeaderboardRoute
   '/friend': typeof AppplayFriendRoute
   '/quick': typeof AppplayQuickRoute
   '/game/$gameId': typeof AppGameGameIdRoute
@@ -75,7 +68,6 @@ export interface FileRoutesByFullPath {
   '/profile/': typeof AppProfileIndexRoute
 }
 export interface FileRoutesByTo {
-  '/leaderboard': typeof LeaderboardRoute
   '/friend': typeof AppplayFriendRoute
   '/quick': typeof AppplayQuickRoute
   '/game/$gameId': typeof AppGameGameIdRoute
@@ -87,7 +79,6 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_app': typeof AppRouteRouteWithChildren
-  '/leaderboard': typeof LeaderboardRoute
   '/_app/(play)/friend': typeof AppplayFriendRoute
   '/_app/(play)/quick': typeof AppplayQuickRoute
   '/_app/game/$gameId': typeof AppGameGameIdRoute
@@ -100,7 +91,6 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/leaderboard'
     | '/friend'
     | '/quick'
     | '/game/$gameId'
@@ -109,7 +99,6 @@ export interface FileRouteTypes {
     | '/profile/'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/leaderboard'
     | '/friend'
     | '/quick'
     | '/game/$gameId'
@@ -120,7 +109,6 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/_app'
-    | '/leaderboard'
     | '/_app/(play)/friend'
     | '/_app/(play)/quick'
     | '/_app/game/$gameId'
@@ -132,7 +120,6 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   AppRouteRoute: typeof AppRouteRouteWithChildren
-  LeaderboardRoute: typeof LeaderboardRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -142,13 +129,6 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: '/'
       preLoaderRoute: typeof AppRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/leaderboard': {
-      id: '/leaderboard'
-      path: '/leaderboard'
-      fullPath: '/leaderboard'
-      preLoaderRoute: typeof LeaderboardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_app/(home)/': {
@@ -229,7 +209,6 @@ const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   AppRouteRoute: AppRouteRouteWithChildren,
-  LeaderboardRoute: LeaderboardRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
