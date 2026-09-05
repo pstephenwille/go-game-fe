@@ -16,7 +16,7 @@ import { Route as AppplayQuickRouteImport } from './routes/_app/(play)/quick'
 import { Route as AppGameGameIdRouteImport } from './routes/_app/game/$gameId'
 import { Route as AppProfileIndexRouteImport } from './routes/_app/profile/index'
 import { Route as AppProfileHistoryRouteImport } from './routes/_app/profile/history'
-import { Route as AppProfileLoginRouteImport } from './routes/_app/profile/login'
+import { Route as AuthCallbackIndexRouteImport } from './routes/auth/callback/index'
 
 const AppRouteRoute = AppRouteRouteImport.update({
   id: '/_app',
@@ -52,10 +52,10 @@ const AppProfileHistoryRoute = AppProfileHistoryRouteImport.update({
   path: '/profile/history',
   getParentRoute: () => AppRouteRoute,
 } as any)
-const AppProfileLoginRoute = AppProfileLoginRouteImport.update({
-  id: '/profile/login',
-  path: '/profile/login',
-  getParentRoute: () => AppRouteRoute,
+const AuthCallbackIndexRoute = AuthCallbackIndexRouteImport.update({
+  id: '/auth/callback/',
+  path: '/auth/callback/',
+  getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -64,17 +64,17 @@ export interface FileRoutesByFullPath {
   '/quick': typeof AppplayQuickRoute
   '/game/$gameId': typeof AppGameGameIdRoute
   '/profile/history': typeof AppProfileHistoryRoute
-  '/profile/login': typeof AppProfileLoginRoute
   '/profile/': typeof AppProfileIndexRoute
+  '/auth/callback/': typeof AuthCallbackIndexRoute
 }
 export interface FileRoutesByTo {
   '/friend': typeof AppplayFriendRoute
   '/quick': typeof AppplayQuickRoute
   '/game/$gameId': typeof AppGameGameIdRoute
   '/profile/history': typeof AppProfileHistoryRoute
-  '/profile/login': typeof AppProfileLoginRoute
   '/': typeof ApphomeIndexRoute
   '/profile': typeof AppProfileIndexRoute
+  '/auth/callback': typeof AuthCallbackIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -83,9 +83,9 @@ export interface FileRoutesById {
   '/_app/(play)/quick': typeof AppplayQuickRoute
   '/_app/game/$gameId': typeof AppGameGameIdRoute
   '/_app/profile/history': typeof AppProfileHistoryRoute
-  '/_app/profile/login': typeof AppProfileLoginRoute
   '/_app/(home)/': typeof ApphomeIndexRoute
   '/_app/profile/': typeof AppProfileIndexRoute
+  '/auth/callback/': typeof AuthCallbackIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -95,17 +95,17 @@ export interface FileRouteTypes {
     | '/quick'
     | '/game/$gameId'
     | '/profile/history'
-    | '/profile/login'
     | '/profile/'
+    | '/auth/callback/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/friend'
     | '/quick'
     | '/game/$gameId'
     | '/profile/history'
-    | '/profile/login'
     | '/'
     | '/profile'
+    | '/auth/callback'
   id:
     | '__root__'
     | '/_app'
@@ -113,13 +113,14 @@ export interface FileRouteTypes {
     | '/_app/(play)/quick'
     | '/_app/game/$gameId'
     | '/_app/profile/history'
-    | '/_app/profile/login'
     | '/_app/(home)/'
     | '/_app/profile/'
+    | '/auth/callback/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   AppRouteRoute: typeof AppRouteRouteWithChildren
+  AuthCallbackIndexRoute: typeof AuthCallbackIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -173,12 +174,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppProfileHistoryRouteImport
       parentRoute: typeof AppRouteRoute
     }
-    '/_app/profile/login': {
-      id: '/_app/profile/login'
-      path: '/profile/login'
-      fullPath: '/profile/login'
-      preLoaderRoute: typeof AppProfileLoginRouteImport
-      parentRoute: typeof AppRouteRoute
+    '/auth/callback/': {
+      id: '/auth/callback/'
+      path: '/auth/callback'
+      fullPath: '/auth/callback/'
+      preLoaderRoute: typeof AuthCallbackIndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
   }
 }
@@ -188,7 +189,6 @@ interface AppRouteRouteChildren {
   AppplayQuickRoute: typeof AppplayQuickRoute
   AppGameGameIdRoute: typeof AppGameGameIdRoute
   AppProfileHistoryRoute: typeof AppProfileHistoryRoute
-  AppProfileLoginRoute: typeof AppProfileLoginRoute
   ApphomeIndexRoute: typeof ApphomeIndexRoute
   AppProfileIndexRoute: typeof AppProfileIndexRoute
 }
@@ -198,7 +198,6 @@ const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppplayQuickRoute: AppplayQuickRoute,
   AppGameGameIdRoute: AppGameGameIdRoute,
   AppProfileHistoryRoute: AppProfileHistoryRoute,
-  AppProfileLoginRoute: AppProfileLoginRoute,
   ApphomeIndexRoute: ApphomeIndexRoute,
   AppProfileIndexRoute: AppProfileIndexRoute,
 }
@@ -209,6 +208,7 @@ const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   AppRouteRoute: AppRouteRouteWithChildren,
+  AuthCallbackIndexRoute: AuthCallbackIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

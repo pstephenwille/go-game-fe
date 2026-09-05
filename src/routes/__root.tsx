@@ -1,52 +1,41 @@
 import { TanStackDevtools } from '@tanstack/react-devtools';
-import {
-	createRootRouteWithContext,
-	Outlet,
-	redirect,
-} from '@tanstack/react-router';
+import { createRootRouteWithContext, Outlet } from '@tanstack/react-router';
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
 
 import '../styles.css';
 import type { QueryClient } from '@tanstack/react-query';
-import { fetchCurrentUserProfile } from '@/auth/api';
+import { loggedInUserQuery } from '@/lib/user.query';
 
 interface MyRouterContext {
-	queryClient: QueryClient;
+  queryClient: QueryClient;
 }
+
 /* TODO: 8/18/26, stephen; add
  *   beforeload
  *   shell-component for providers */
 export const Route = createRootRouteWithContext<MyRouterContext>()({
-	beforeLoad: async ({ context, location }) => {
-		const authData = await context.queryClient.ensureQueryData({
-			queryKey: ['auth-user'],
-			queryFn: fetchCurrentUserProfile,
-		});
-		const isAuthenticated = !!authData;
-		console.log('%c...beforeload', 'color:gold', authData);
-
-		// if (!isAuthenticated && location.pathname !== '/profile/login') {
-		// 	throw redirect({ to: '/profile/login' });
-		// }
-	},
-	component: RootComponent,
+  beforeLoad: async ({ context }) => {
+    const user = await context.queryClient.ensureQueryData(loggedInUserQuery);
+    console.log('%c...user-_root', 'color:gold', user);
+  },
+  component: RootComponent,
 });
 
 function RootComponent() {
-	return (
-		<>
-			<Outlet />
-			<TanStackDevtools
-				config={{
-					position: 'bottom-right',
-				}}
-				plugins={[
-					{
-						name: 'TanStack Router',
-						render: <TanStackRouterDevtoolsPanel />,
-					},
-				]}
-			/>
-		</>
-	);
+  return (
+    <>
+      <Outlet />
+      <TanStackDevtools
+        config={{
+          position: 'bottom-right',
+        }}
+        plugins={[
+          {
+            name: 'TanStack Router',
+            render: <TanStackRouterDevtoolsPanel />,
+          },
+        ]}
+      />
+    </>
+  );
 }

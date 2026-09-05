@@ -24,7 +24,11 @@
 	"linter": {
 		"enabled": true,
 		"rules": {
+			"nursery": {
+				"noFloatingPromises": "off"
+			},
 			"recommended": true,
+			"a11y": "off",
 			"suspicious": {
 				"noArrayIndexKey": "warn"
 			}

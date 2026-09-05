@@ -1,9 +1,10 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { RouterProvider } from '@tanstack/react-router';
 import ReactDOM from 'react-dom/client';
-import { AuthContext, AuthProvider } from '@/auth/auth-provider';
-import { useAuthQuery } from '@/auth/use-auth';
+// import { AuthContext, AuthProvider } from '@/auth/auth-provider';
+// import { useAuthQuery } from '@/auth/use-auth';
 import { router } from '@/router';
+import '@/auth/amplify';
 
 const queryClient = new QueryClient();
 
@@ -17,9 +18,7 @@ if (!rootElement.innerHTML) {
 	const root = ReactDOM.createRoot(rootElement);
 	root.render(
 		<QueryClientProvider client={queryClient}>
-			<AuthProvider>
-				<Index />
-			</AuthProvider>
+			<Index />
 		</QueryClientProvider>,
 	);
 }

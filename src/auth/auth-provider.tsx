@@ -11,6 +11,7 @@ export const AuthContext = createContext<AuthContextValue | null>(null);
 // 3. Derive the type directly from the Context variable for use in your router
 export type AuthContextType = React.ContextType<typeof AuthContext>;
 
+/* TODO: 9/2/26, stephen; not used */
 export function AuthProvider({ children }) {
 	const {
 		data: user,
