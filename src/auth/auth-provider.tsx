@@ -1,34 +1,37 @@
 import { useQuery } from '@tanstack/react-query';
-import { createContext } from 'react';
-import { fetchCurrentUserProfile } from '@/auth/api';
+import {
+	signOut as amplifySignOut,
+	signInWithRedirect,
+} from 'aws-amplify/auth';
+import type { ReactNode } from 'react';
+import { AuthContext } from '@/auth/auth-context';
+import { loggedInUserOptions } from '@/auth/user.query';
 
-export interface AuthContextValue {
-	isAuthenticated: boolean;
-	user: { id: string; name: string } | null;
-	isLoading: boolean;
-}
-export const AuthContext = createContext<AuthContextValue | null>(null);
-// 3. Derive the type directly from the Context variable for use in your router
-export type AuthContextType = React.ContextType<typeof AuthContext>;
+export function AuthProvider({ children }: { children: ReactNode }) {
+	const { data: user, isLoading } = useQuery(loggedInUserOptions);
+	console.log('%c...auth', 'color:grey', user, isLoading);
 
-/* TODO: 9/2/26, stephen; not used */
-export function AuthProvider({ children }) {
-	const {
-		data: user,
-		isLoading,
-		error,
-	} = useQuery({
-		queryKey: ['auth-user'],
-		queryFn: fetchCurrentUserProfile,
-		staleTime: Infinity,
-		retry: false,
-	});
+	const signIn = async () => {
+		sessionStorage.setItem(
+			'redirect_after_login',
+			location.pathname + location.search,
+		);
+
+		void (await signInWithRedirect({
+			provider: 'Google',
+			customState: window.location.pathname + window.location.search,
+		}));
+	};
+
+	const signOut = async () => {
+		try {
+			void (await amplifySignOut());
+		} catch (error) {
+			console.log('%c...error', 'color:gold', error);
+		}
+	};
 
 	return (
-		<AuthContext.Provider
-			value={{ user, isAuthenticated: true, isLoading, error }}
-		>
-			{children}
-		</AuthContext.Provider>
+		<AuthContext value={{ signIn, signOut, user }}>{children}</AuthContext>
 	);
 }

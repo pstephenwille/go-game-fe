@@ -7,15 +7,12 @@ Amplify.configure({
 			userPoolClientId: '3sfkggll3j1u91fc9rom4j0leg',
 			loginWith: {
 				oauth: {
-					domain: 'us-east-1oclbku9ow.auth.us-east-1.a	mazoncognito.com',
+					domain: 'us-east-1oclbku9ow.auth.us-east-1.amazoncognito.com',
 					scopes: ['openid', 'email', 'profile'],
-					redirectSignIn: [
-						'http://localhost:3000/auth/callback',
-						'https://free-go-game.site/auth/callback',
-					],
+					redirectSignIn: [import.meta.env.RE],
 					redirectSignOut: [
-						'http://localhost:3000/auth/callback',
-						'https://free-go-game.site/auth/callback',
+						'http://localhost:3000',
+						'https://free-go-game.site',
 					],
 					responseType: 'code',
 				},
@@ -23,5 +20,3 @@ Amplify.configure({
 		},
 	},
 });
-
-console.log('%c...amplify-configured', 'color:gold', Amplify);

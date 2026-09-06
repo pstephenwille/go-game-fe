@@ -1,41 +1,49 @@
 import { TanStackDevtools } from '@tanstack/react-devtools';
-import { createRootRouteWithContext, Outlet } from '@tanstack/react-router';
+import { ReactQueryDevtoolsPanel } from '@tanstack/react-query-devtools';
+import {
+	createRootRouteWithContext,
+	Outlet,
+	redirect,
+} from '@tanstack/react-router';
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
 
 import '../styles.css';
 import type { QueryClient } from '@tanstack/react-query';
-import { loggedInUserQuery } from '@/lib/user.query';
 
 interface MyRouterContext {
-  queryClient: QueryClient;
+	queryClient: QueryClient;
 }
 
-/* TODO: 8/18/26, stephen; add
- *   beforeload
- *   shell-component for providers */
 export const Route = createRootRouteWithContext<MyRouterContext>()({
-  beforeLoad: async ({ context }) => {
-    const user = await context.queryClient.ensureQueryData(loggedInUserQuery);
-    console.log('%c...user-_root', 'color:gold', user);
-  },
-  component: RootComponent,
+	loader: () => {
+		const redirectUrl = sessionStorage.getItem('redirect_after_login');
+		sessionStorage.removeItem('redirect_after_login');
+		if (redirectUrl) {
+			throw redirect({ to: redirectUrl, throw: true });
+		}
+	},
+	component: RootComponent,
 });
 
 function RootComponent() {
-  return (
-    <>
-      <Outlet />
-      <TanStackDevtools
-        config={{
-          position: 'bottom-right',
-        }}
-        plugins={[
-          {
-            name: 'TanStack Router',
-            render: <TanStackRouterDevtoolsPanel />,
-          },
-        ]}
-      />
-    </>
-  );
+	return (
+		<>
+			<Outlet />
+			<TanStackDevtools
+				config={{
+					position: 'bottom-right',
+				}}
+				plugins={[
+					{
+						name: 'TanStack Router',
+						render: <TanStackRouterDevtoolsPanel />,
+					},
+					{
+						name: 'TanStack Query',
+						render: <ReactQueryDevtoolsPanel />,
+					},
+				]}
+			/>
+		</>
+	);
 }

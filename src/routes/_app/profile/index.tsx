@@ -1,9 +1,13 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from '@tanstack/react-router';
+import { useAuth } from '@/auth/use-auth';
 
 export const Route = createFileRoute('/_app/profile/')({
-  component: RouteComponent,
-})
+	component: RouteComponent,
+});
 
 function RouteComponent() {
-  return <div>Hello "/user/profile"!</div>
+	const auth = useAuth();
+	console.log('%c...profile', 'color:gold', auth);
+
+	return <div>Hello "/user/profile"!</div>;
 }

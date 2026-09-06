@@ -16,7 +16,6 @@ import { Route as AppplayQuickRouteImport } from './routes/_app/(play)/quick'
 import { Route as AppGameGameIdRouteImport } from './routes/_app/game/$gameId'
 import { Route as AppProfileIndexRouteImport } from './routes/_app/profile/index'
 import { Route as AppProfileHistoryRouteImport } from './routes/_app/profile/history'
-import { Route as AuthCallbackIndexRouteImport } from './routes/auth/callback/index'
 
 const AppRouteRoute = AppRouteRouteImport.update({
   id: '/_app',
@@ -52,11 +51,6 @@ const AppProfileHistoryRoute = AppProfileHistoryRouteImport.update({
   path: '/profile/history',
   getParentRoute: () => AppRouteRoute,
 } as any)
-const AuthCallbackIndexRoute = AuthCallbackIndexRouteImport.update({
-  id: '/auth/callback/',
-  path: '/auth/callback/',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof ApphomeIndexRoute
@@ -65,7 +59,6 @@ export interface FileRoutesByFullPath {
   '/game/$gameId': typeof AppGameGameIdRoute
   '/profile/history': typeof AppProfileHistoryRoute
   '/profile/': typeof AppProfileIndexRoute
-  '/auth/callback/': typeof AuthCallbackIndexRoute
 }
 export interface FileRoutesByTo {
   '/friend': typeof AppplayFriendRoute
@@ -74,7 +67,6 @@ export interface FileRoutesByTo {
   '/profile/history': typeof AppProfileHistoryRoute
   '/': typeof ApphomeIndexRoute
   '/profile': typeof AppProfileIndexRoute
-  '/auth/callback': typeof AuthCallbackIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -85,7 +77,6 @@ export interface FileRoutesById {
   '/_app/profile/history': typeof AppProfileHistoryRoute
   '/_app/(home)/': typeof ApphomeIndexRoute
   '/_app/profile/': typeof AppProfileIndexRoute
-  '/auth/callback/': typeof AuthCallbackIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -96,7 +87,6 @@ export interface FileRouteTypes {
     | '/game/$gameId'
     | '/profile/history'
     | '/profile/'
-    | '/auth/callback/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/friend'
@@ -105,7 +95,6 @@ export interface FileRouteTypes {
     | '/profile/history'
     | '/'
     | '/profile'
-    | '/auth/callback'
   id:
     | '__root__'
     | '/_app'
@@ -115,12 +104,10 @@ export interface FileRouteTypes {
     | '/_app/profile/history'
     | '/_app/(home)/'
     | '/_app/profile/'
-    | '/auth/callback/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   AppRouteRoute: typeof AppRouteRouteWithChildren
-  AuthCallbackIndexRoute: typeof AuthCallbackIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -174,13 +161,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppProfileHistoryRouteImport
       parentRoute: typeof AppRouteRoute
     }
-    '/auth/callback/': {
-      id: '/auth/callback/'
-      path: '/auth/callback'
-      fullPath: '/auth/callback/'
-      preLoaderRoute: typeof AuthCallbackIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
@@ -208,7 +188,6 @@ const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   AppRouteRoute: AppRouteRouteWithChildren,
-  AuthCallbackIndexRoute: AuthCallbackIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
