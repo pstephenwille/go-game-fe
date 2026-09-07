@@ -4,11 +4,13 @@ import { routeTree } from './routeTree.gen';
 
 export interface MyRouterContext {
 	queryClient: QueryClient;
+	auth: any;
 }
 
 export const router = createTanStackRouter({
 	context: {
 		queryClient: undefined!,
+		auth: undefined!,
 	},
 	routeTree,
 	scrollRestoration: true,

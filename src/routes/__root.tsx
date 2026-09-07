@@ -8,17 +8,14 @@ import {
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
 
 import '../styles.css';
-import type { QueryClient } from '@tanstack/react-query';
-
-interface MyRouterContext {
-	queryClient: QueryClient;
-}
+import type { MyRouterContext } from '@/router';
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
-	loader: () => {
+	loader: async ({ context }) => {
 		const redirectUrl = sessionStorage.getItem('redirect_after_login');
 		sessionStorage.removeItem('redirect_after_login');
-		if (redirectUrl) {
+
+		if (redirectUrl && context.auth.user) {
 			throw redirect({ to: redirectUrl, throw: true });
 		}
 	},

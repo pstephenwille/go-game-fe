@@ -11,8 +11,6 @@ export const loggedInUserOptions = queryOptions({
 			]);
 			return { user, session };
 		} catch (error) {
-			console.log('%c...auth-error', 'color:gold', error);
-
 			return null;
 		}
 	},

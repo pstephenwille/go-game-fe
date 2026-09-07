@@ -8,8 +8,7 @@ import { AuthContext } from '@/auth/auth-context';
 import { loggedInUserOptions } from '@/auth/user.query';
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-	const { data: user, isLoading } = useQuery(loggedInUserOptions);
-	console.log('%c...auth', 'color:grey', user, isLoading);
+	const { data: user } = useQuery(loggedInUserOptions);
 
 	const signIn = async () => {
 		sessionStorage.setItem(
@@ -27,7 +26,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 		try {
 			void (await amplifySignOut());
 		} catch (error) {
-			console.log('%c...error', 'color:gold', error);
+			console.log('%c...error', 'color:red', error);
 		}
 	};
 

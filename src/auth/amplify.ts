@@ -9,11 +9,8 @@ Amplify.configure({
 				oauth: {
 					domain: 'us-east-1oclbku9ow.auth.us-east-1.amazoncognito.com',
 					scopes: ['openid', 'email', 'profile'],
-					redirectSignIn: [import.meta.env.RE],
-					redirectSignOut: [
-						'http://localhost:3000',
-						'https://free-go-game.site',
-					],
+					redirectSignIn: [import.meta.env.APP_REDIRECT_AUTH_URL],
+					redirectSignOut: [import.meta.env.APP_REDIRECT_AUTH_URL],
 					responseType: 'code',
 				},
 			},
