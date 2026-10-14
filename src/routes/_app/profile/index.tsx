@@ -7,7 +7,6 @@ export const Route = createFileRoute('/_app/profile/')({
 
 function RouteComponent() {
 	const auth = useAuth();
-	console.log('%c...profile', 'color:gold', auth);
 
 	return <div>Hello "/user/profile"!</div>;
 }

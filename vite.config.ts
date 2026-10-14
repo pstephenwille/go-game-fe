@@ -5,12 +5,12 @@ import viteReact from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 
 const config = defineConfig({
+	envPrefix: ['APP_'],
 	build: {
 		sourcemap: true,
 	},
 	resolve: { tsconfigPaths: true },
 	plugins: [
-		devtools(),
 		tailwindcss(),
 		tanstackRouter({ target: 'react', autoCodeSplitting: true }),
 		viteReact(),
